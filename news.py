@@ -37,11 +37,9 @@ headers = {
 
 # Create Notion page
 payload = {
-    "parent": {
-        "database_id": DATABASE_ID
-    },
+    "parent": {"database_id": DATABASE_ID},
     "properties": {
-        "News 1 Headline": {
+        "News1": {
             "title": [
                 {
                     "text": {
@@ -55,25 +53,23 @@ payload = {
                 "start": str(date.today())
             }
         },
-        "Link 1": {
+        "Link1": {
             "url": articles[0]["url"]
         },
-        "News 2 Headline": {
-    "rich_text": [
-        {
-            "type": "text",
-            "text": {
-                "content": articles[1]["title"]
-            }
-        }
-    ]
-},
-        "Link 2": {
+        "News2": {
+            "rich_text": [
+                {
+                    "text": {
+                        "content": articles[1]["title"]
+                    }
+                }
+            ]
+        },
+        "Link2": {
             "url": articles[1]["url"]
         }
     }
 }
-
 response = requests.post(
     "https://api.notion.com/v1/pages",
     headers=headers,
