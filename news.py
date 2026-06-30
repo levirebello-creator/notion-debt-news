@@ -1,0 +1,79 @@
+import os
+import requests
+from datetime import date
+
+NOTION_TOKEN = os.environ["NOTION_TOKEN"]
+DATABASE_ID = os.environ["DATABASE_ID"]
+GNEWS_API_KEY = os.environ["GNEWS_API_KEY"]
+
+query = (
+    '(India OR Indian) AND '
+    '(RBI OR "debt market" OR bond OR bonds OR '
+    '"government securities" OR G-Sec OR "Treasury Bills" '
+    'OR SDL OR "corporate bonds")'
+)
+
+url = (
+    f"https://gnews.io/api/v4/search?"
+    f"q={query}"
+    f"&lang=en"
+    f"&max=2"
+    f"&apikey={GNEWS_API_KEY}"
+)
+
+response = requests.get(url)
+response.raise_for_status()
+articles = response.json().get("articles", [])
+
+if len(articles) < 2:
+    raise Exception("Less than 2 news articles returned.")
+
+headers = {
+    "Authorization": f"Bearer {NOTION_TOKEN}",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
+}
+
+payload = {
+    "parent": {"database_id": DATABASE_ID},
+    "properties": {
+        "News 1 Headline": {
+            "title": [
+                {
+                    "text": {
+                        "content": articles[0]["title"]
+                    }
+                }
+            ]
+        },
+        "Date": {
+            "date": {
+                "start": str(date.today())
+            }
+        },
+        "Link 1": {
+            "url": articles[0]["url"]
+        },
+        "News 2 Headline": {
+            "rich_text": [
+                {
+                    "text": {
+                        "content": articles[1]["title"]
+                    }
+                }
+            ]
+        },
+        "Link 2": {
+            "url": articles[1]["url"]
+        }
+    }
+}
+
+r = requests.post(
+    "https://api.notion.com/v1/pages",
+    headers=headers,
+    json=payload
+)
+
+print(r.status_code)
+print(r.text)
