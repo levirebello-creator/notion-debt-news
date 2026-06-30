@@ -59,14 +59,15 @@ payload = {
             "url": articles[0]["url"]
         },
         "News 2 Headline": {
-            "rich_text": [
-                {
-                    "text": {
-                        "content": articles[1]["title"]
-                    }
-                }
-            ]
-        },
+    "rich_text": [
+        {
+            "type": "text",
+            "text": {
+                "content": articles[1]["title"]
+            }
+        }
+    ]
+},
         "Link 2": {
             "url": articles[1]["url"]
         }
