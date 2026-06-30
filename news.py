@@ -6,15 +6,19 @@ NOTION_TOKEN = os.environ["NOTION_TOKEN"]
 DATABASE_ID = os.environ["DATABASE_ID"]
 GNEWS_API_KEY = os.environ["GNEWS_API_KEY"]
 
-query = (
-    '(India OR Indian) AND '
-    '(RBI OR "debt market" OR bond OR bonds OR '
-    '"government securities" OR G-Sec OR "Treasury Bills" '
-    'OR SDL OR "corporate bonds")'
-)
+query = "India debt market"
+
+from urllib.parse import quote
+
+query = quote(query)
 
 url = (
-    f"https://gnews.io/api/v4/search?"
+    f"https://gnews.io/api/v4/search"
+    f"?q={query}"
+    f"&lang=en"
+    f"&max=2"
+    f"&apikey={GNEWS_API_KEY}"
+)
     f"q={query}"
     f"&lang=en"
     f"&max=2"
