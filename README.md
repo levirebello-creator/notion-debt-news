@@ -14,8 +14,8 @@ per day.
 | No duplicate protection | Checks new headlines against 60 days of Notion history + auto-archives existing duplicate rows |
 | One 70-line script | `config.py` / `utils.py` / `news.py` / `backfill.py`, typed, logged, retried |
 
-The Notion schema is untouched: **News 1 Headline / Date / Link 1 /
-News 2 Headline / Link 2**, one row per day.
+The Notion schema is untouched: **News1 / Date / Link1 /
+News2 / Link2**, one row per day.
 
 ## Project layout
 

@@ -25,11 +25,11 @@ NOTION_API_BASE: str = "https://api.notion.com/v1"
 
 # Exact property names in the "Daily Financial News" database.
 # DO NOT CHANGE these unless the Notion database schema itself changes.
-PROP_NEWS1_TITLE = "News 1 Headline"   # Title property
-PROP_DATE = "Date"                     # Date property
-PROP_LINK1 = "Link 1"                  # URL property
-PROP_NEWS2_TITLE = "News 2 Headline"   # Text (rich_text) property
-PROP_LINK2 = "Link 2"                  # URL property
+PROP_NEWS1_TITLE = "News1"    # Title property
+PROP_DATE = "Date"             # Date property
+PROP_LINK1 = "Link1"           # URL property
+PROP_NEWS2_TITLE = "News2"    # Text (rich_text) property
+PROP_LINK2 = "Link2"           # URL property
 
 # ---------------------------------------------------------------------------
 # Volume controls
