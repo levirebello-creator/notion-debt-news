@@ -1,0 +1,37 @@
+name: Backfill Historical News
+
+on:
+  workflow_dispatch:
+    inputs:
+      csv_file:
+        description: "Path to the CSV file in the repo"
+        required: true
+        default: "historical_news_june4_july1.csv"
+      dry_run:
+        description: "Dry run only (true/false)"
+        required: true
+        default: "true"
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Run backfill
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            python backfill.py "${{ github.event.inputs.csv_file }}" --dry-run
+          else
+            python backfill.py "${{ github.event.inputs.csv_file }}"
+          fi
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          DATABASE_ID: ${{ secrets.DATABASE_ID }}
